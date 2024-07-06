@@ -1,12 +1,13 @@
 {% csrf_token %}
-<form action="{% url 'entries' %}" method="GET">
+
+<form action="" method="GET">
     <div class="search_form d-flex">
         <div class="input w-25 me-2">
-            {% for field in form %}
+            {% for field in search_form %}
+                <p>{{ field }}</p>
                 {% for error in field.errors %}
                     <p class="text-danger">{{ error }}</p>
                 {% endfor %}
-                <p>{{ field }}</p>
             {% endfor %}
         </div>
     

@@ -5,16 +5,31 @@ from webapp.forms import EntryForm, SearchForm
 
 
 def index(request):
+    entry_form = EntryForm()
+
+    if request.method == 'POST':
+        return create_entry(request)
+
     if request.GET:
-        form = SearchForm(request.GET)
-        if form.is_valid():
-            search = form.cleaned_data['query']
+        search_form = SearchForm(request.GET)
+        if search_form.is_valid():
+            search = search_form.cleaned_data['query']
             entries = Entry.objects.filter(name=search)
-            return render(request, 'index.html', {'entries': entries, 'form': form})
+            return render(request, 'index.html', context={'entries': entries, 'search_form': search_form, 'entry_form': entry_form})
 
         entries = Entry.objects.filter(status='active').order_by('created_at')
-        return render(request, 'index.html', {'entries': entries, 'form': form})
+        return render(request, 'index.html', context={'entries': entries, 'search_form': search_form, 'entry_form': entry_form})
 
-    form = SearchForm()
+    search_form = SearchForm()
     entries = Entry.objects.filter(status='active').order_by('created_at')
-    return render(request, 'index.html', context={'entries': entries, 'form': form})
+    return render(request, 'index.html', context={'entries': entries, 'search_form': search_form, 'entry_form': entry_form})
+
+
+def create_entry(request):
+    form = EntryForm(data=request.POST)
+    if form.is_valid():
+        form.save()
+        return redirect('entries')
+    else:
+        return render(request, 'create_entry.html', {'form': form})
+

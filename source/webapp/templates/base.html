@@ -25,9 +25,9 @@
                         </li>
                     {% endblock %}
 
-                    {% block new_product %}
+                    {% block create_entry %}
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Добавить запись</a>
+                            <a class="nav-link active" aria-current="page" href="{% url 'create_entry' %}">Добавить запись</a>
                         </li>
                     {% endblock %}
                 

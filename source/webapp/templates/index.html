@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
     <h3>Гостевая книга</h3>
     
@@ -17,4 +16,8 @@
             </div>
         </div>
     {% endfor %}
+    
+    <h3>Добавить запись</h3>
+    
+    {% include 'partial/entry_form.html' with button_text='Добавить запись' %}
 {% endblock %}
