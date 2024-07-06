@@ -1,10 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+
+{% block content %}
+    <h3>Гостевая книга</h3>
+    
+    {% for entry in entries %}
+    	<div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ entry.name }} </h5>
+                <a href="#"><i class="bi bi-pencil-square"></i></a>
+                <a href="#"><i class="bi bi-journal-minus"></i></a>
+                <p class="card-text">{{ entry.text }}</p>
+                <a href="#" class="btn btn-primary">Button</a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

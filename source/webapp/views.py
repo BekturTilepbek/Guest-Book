@@ -1,5 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+
+from webapp.models import Entry
 
 
 def index(request):
-    return render(request, 'index.html')
+    entries = Entry.objects.filter(status='active').order_by('created_at')
+    return render(request, 'index.html', context={'entries': entries})
