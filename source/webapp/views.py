@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
 from webapp.models import Entry
-from webapp.forms import EntryForm, SearchForm
+from webapp.forms import EntryForm, SearchForm, DeleteEntryForm
 
 
 def index(request):
@@ -15,14 +15,23 @@ def index(request):
         if search_form.is_valid():
             search = search_form.cleaned_data['query']
             entries = Entry.objects.filter(name=search).order_by('-created_at')
-            return render(request, 'index.html', context={'entries': entries, 'search_form': search_form, 'entry_form': entry_form})
+            return render(request, 'index.html', context={
+                'entries': entries,
+                'search_form': search_form,
+                'entry_form': entry_form})
 
         entries = Entry.objects.filter(status='active').order_by('-created_at')
-        return render(request, 'index.html', context={'entries': entries, 'search_form': search_form, 'entry_form': entry_form})
+        return render(request, 'index.html', context={
+            'entries': entries,
+            'search_form': search_form,
+            'entry_form': entry_form})
 
     search_form = SearchForm()
     entries = Entry.objects.filter(status='active').order_by('-created_at')
-    return render(request, 'index.html', context={'entries': entries, 'search_form': search_form, 'entry_form': entry_form})
+    return render(request, 'index.html', context={
+        'entries': entries,
+        'search_form': search_form,
+        'entry_form': entry_form})
 
 
 def create_entry(request):
@@ -51,3 +60,16 @@ def update_entry(request, pk):
         else:
             return render(request, 'update_entry.html', {'entry_form': entry_form})
 
+
+def delete_entry(request, pk):
+    entry = get_object_or_404(Entry, pk=pk)
+    if request.method == 'GET':
+        delete_form = DeleteEntryForm()
+        return render(request, 'delete_entry.html', {'entry': entry, 'delete_form': delete_form})
+    else:
+        delete_form = DeleteEntryForm(data=request.POST, author_email=entry.email)
+        if delete_form.is_valid():
+            entry.delete()
+            return redirect('entries')
+        else:
+            return render(request, 'delete_entry.html', {'entry': entry, 'delete_form': delete_form})

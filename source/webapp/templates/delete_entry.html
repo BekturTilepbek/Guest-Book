@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3>Подтвердите удаление записи автора {{ entry.name }}</h3>
+    
+    {% include 'partial/delete_form.html' %}
+
+{% endblock %}
