@@ -4,6 +4,8 @@
 {% block content %}
     <h3>Гостевая книга</h3>
     
+    {% include 'partial/search_form.html' %}
+    
     {% for entry in entries %}
     	<div class="card mb-3">
             <div class="card-body">
