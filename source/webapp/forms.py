@@ -14,6 +14,7 @@ class EntryForm(forms.ModelForm):
             },
             'email': {
                 'required': 'Заполните поле',
+
             },
             'text': {
                 'required': 'Заполните поле'

@@ -14,22 +14,40 @@ def index(request):
         search_form = SearchForm(request.GET)
         if search_form.is_valid():
             search = search_form.cleaned_data['query']
-            entries = Entry.objects.filter(name=search)
+            entries = Entry.objects.filter(name=search).order_by('-created_at')
             return render(request, 'index.html', context={'entries': entries, 'search_form': search_form, 'entry_form': entry_form})
 
-        entries = Entry.objects.filter(status='active').order_by('created_at')
+        entries = Entry.objects.filter(status='active').order_by('-created_at')
         return render(request, 'index.html', context={'entries': entries, 'search_form': search_form, 'entry_form': entry_form})
 
     search_form = SearchForm()
-    entries = Entry.objects.filter(status='active').order_by('created_at')
+    entries = Entry.objects.filter(status='active').order_by('-created_at')
     return render(request, 'index.html', context={'entries': entries, 'search_form': search_form, 'entry_form': entry_form})
 
 
 def create_entry(request):
-    form = EntryForm(data=request.POST)
-    if form.is_valid():
-        form.save()
-        return redirect('entries')
+    if request.method == 'GET':
+        entry_form = EntryForm()
+        return render(request, 'create_entry.html', context={'entry_form': entry_form})
     else:
-        return render(request, 'create_entry.html', {'form': form})
+        entry_form = EntryForm(data=request.POST)
+        if entry_form.is_valid():
+            entry_form.save()
+            return redirect('entries')
+        else:
+            return render(request, 'create_entry.html', {'entry_form': entry_form})
+
+
+def update_entry(request, pk):
+    entry = get_object_or_404(Entry, pk=pk)
+    if request.method == 'GET':
+        entry_form = EntryForm(instance=entry)
+        return render(request, 'update_entry.html', {'entry_form': entry_form})
+    else:
+        entry_form = EntryForm(request.POST, instance=entry)
+        if entry_form.is_valid():
+            entry_form.save()
+            return redirect('entries')
+        else:
+            return render(request, 'update_entry.html', {'entry_form': entry_form})
 

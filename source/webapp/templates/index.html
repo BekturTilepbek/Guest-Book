@@ -9,15 +9,13 @@
     	<div class="card mb-3">
             <div class="card-body">
                 <h5 class="card-title">{{ entry.name }} </h5>
-                <a href="#"><i class="bi bi-pencil-square"></i></a>
+                <a href="{% url 'update_entry' entry.pk %}"><i class="bi bi-pencil-square"></i></a>
                 <a href="#"><i class="bi bi-journal-minus"></i></a>
                 <p class="card-text">{{ entry.text }}</p>
                 <a href="#" class="btn btn-primary">Button</a>
             </div>
         </div>
     {% endfor %}
-    
-    <h3>Добавить запись</h3>
     
     {% include 'partial/entry_form.html' with button_text='Добавить запись' %}
 {% endblock %}
