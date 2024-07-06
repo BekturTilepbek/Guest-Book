@@ -2,19 +2,25 @@
 
 {% block content %}
     <h3>Гостевая книга</h3>
-    
+
     {% include 'partial/search_form.html' %}
     
     {% for entry in entries %}
     	<div class="card mb-3">
             <div class="card-body">
-                <h5 class="card-title">{{ entry.name }} </h5>
-                <a href="{% url 'update_entry' entry.pk %}"><i class="bi bi-pencil-square"></i></a>
-                <a href="{% url 'delete_entry' entry.pk %}"><i class="bi bi-journal-minus"></i></a>
+                <div class="card-header-custom d-flex flex-nowrap ">
+                    <p class="h5 card-title p-0 m-0">{{ entry.name }} ({{ entry.email }})</p>
+                    <div class="links ms-auto">
+                        <a href="{% url 'update_entry' entry.pk %}"><i class="bi bi-pencil-square fs-2 text-dark"></i></a>
+                        <a href="{% url 'delete_entry' entry.pk %}"><i class="bi bi-trash fs-2 text-dark ms-2"></i></a>
+                    </div>
+                </div>
                 <p class="card-text">{{ entry.text }}</p>
             </div>
         </div>
     {% endfor %}
-    
+
+    <hr class="my-5 opacity-100">
+
     {% include 'partial/entry_form.html' with button_text='Добавить запись' %}
 {% endblock %}

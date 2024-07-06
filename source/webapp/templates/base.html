@@ -18,20 +18,6 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    {% block products %}
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Записи</a>
-                        </li>
-                    {% endblock %}
-
-                    {% block create_entry %}
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{% url 'create_entry' %}">Добавить запись</a>
-                        </li>
-                    {% endblock %}
-                
-                </ul>
             </div>
         </div>
     </nav>

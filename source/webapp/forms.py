@@ -54,7 +54,7 @@ class DeleteEntryForm(forms.Form):
     )
 
     def __init__(self, *args, **kwargs):
-        self.author_email = kwargs.pop('author_email')
+        self.author_email = kwargs.pop('author_email', None)
         super(DeleteEntryForm, self).__init__(*args, **kwargs)
 
     def clean(self):

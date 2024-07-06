@@ -4,7 +4,7 @@ statuses = [('active', 'Активно'), ('blocked', 'Заблокирован�
 
 
 class Entry(models.Model):
-    name = models.CharField(max_length=50, null=False, blank=False, verbose_name="Имя автора записи")
+    name = models.CharField(max_length=20, null=False, blank=False, verbose_name="Имя автора записи")
     email = models.EmailField(null=False, blank=False, verbose_name="Почта автора записи")
     text = models.TextField(null=False, blank=False, verbose_name="Текст записи")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата и время создания")

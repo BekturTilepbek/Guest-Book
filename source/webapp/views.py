@@ -37,14 +37,14 @@ def index(request):
 def create_entry(request):
     if request.method == 'GET':
         entry_form = EntryForm()
-        return render(request, 'create_entry.html', context={'entry_form': entry_form})
+        return render(request, 'index.html', context={'entry_form': entry_form})
     else:
         entry_form = EntryForm(data=request.POST)
         if entry_form.is_valid():
             entry_form.save()
             return redirect('entries')
         else:
-            return render(request, 'create_entry.html', {'entry_form': entry_form})
+            return render(request, 'index.html', {'entry_form': entry_form})
 
 
 def update_entry(request, pk):
